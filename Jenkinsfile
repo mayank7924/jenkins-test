@@ -1,23 +1,20 @@
 pipeline {
-    agent { docker { image 'node:22' } }
+    agent any
+
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/mayank7924/jenkins-test.git'
-            }
-        }
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm install vercel'
-                sh 'npm run build'
+                echo 'Building...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
             }
         }
         stage('Deploy') {
             steps {
-                withCredentials([string(credentialsId: 'vercel-token', variable: 'VERCEL_TOKEN')]) {
-                    sh 'vercel deploy --prebuilt --token=$VERCEL_TOKEN'
-                }
+                echo 'Deploying...'
             }
         }
     }
